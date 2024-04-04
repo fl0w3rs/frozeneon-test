@@ -1,0 +1,88 @@
+@import './base.scss';
+
+:root {
+  --background: #222;
+  --text-color: #e8e8e8;
+
+  --primary: #4CAF50;
+  --secondary: #e91e63;
+  --accent: #673ab7;
+  --muted: #888;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-active: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-active);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background);
+}
+
+
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+input {
+  background-color: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+
+  transition: all .2s ease-in-out;
+
+  &:focus {
+    border: 1px solid var(--border-active);
+  }
+}
+
+button {
+  border: 1px solid var(--border);
+
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+
+  --bg-color: var(--btn-bg-color, var(--accent));
+  --color: var(--btn-text-color, var(--text-color));
+
+  background-color: var(--bg-color);
+  color: var(--color);
+
+  transition: all .2s ease-in-out;
+
+  &.outline {
+    background-color: transparent;
+    color: var(--bg-color);
+    border: 1px solid var(--bg-color);
+
+    &:hover {
+      background-color: var(--bg-color);
+      color: var(--color);
+      border: 1px solid var(--bg-color);
+    }
+  }
+}
+
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+}
