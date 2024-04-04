@@ -78,6 +78,7 @@ const showModal = ref(false)
 
     &__labels {
       display: flex;
+      flex-wrap: wrap;
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;

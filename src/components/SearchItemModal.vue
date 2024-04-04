@@ -107,9 +107,13 @@ function formatBytes(bytes: number, decimals: number = 2) {
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/media';
+
 .search-item-modal {
   width: 100%;
   height: 100%;
+
+  padding: 0 20px;
 
   background-color: rgba(0, 0, 0, 0.5);
 
@@ -153,6 +157,11 @@ function formatBytes(bytes: number, decimals: number = 2) {
 
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+    @include media("max", "md") {
+      grid-template-columns: 1fr;
+    }
+
     gap: 20px;
 
     .stats__col {
