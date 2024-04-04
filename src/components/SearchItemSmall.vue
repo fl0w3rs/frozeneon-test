@@ -44,7 +44,10 @@ const showModal = ref(false)
         {{ item.package.description }}
       </div>
 
-      <div v-if="item.package.keywords?.length > 0" class="search-item__info__keywords">
+      <div
+        v-if="Array.isArray(item.package.keywords) && item.package.keywords.length > 0"
+        class="search-item__info__keywords"
+      >
         <div
           v-for="keyword in item.package.keywords" :key="`keyword_${item.package.name}_${keyword}`"
           class="search-item__info__keywords__item"
