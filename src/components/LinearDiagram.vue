@@ -28,7 +28,6 @@ const processHover = (ev: any, key: string | null) => {
   hoveredBar.key = key;
   if(!key) return;
 
-  console.log(ev)
   hoveredBar.position = [ev.clientX + 5, ev.clientY - 35];
 
   // move position if it not fits in screen
