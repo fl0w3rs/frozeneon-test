@@ -45,7 +45,10 @@ const showModal = ref(false)
       </div>
 
       <div
-        v-if="Array.isArray(item.package.keywords) && item.package.keywords.length > 0"
+        v-if="
+          Array.isArray(item.package.keywords)
+          && item.package.keywords.length > 0
+        "
         class="search-item__info__keywords"
       >
         <div

@@ -4,6 +4,7 @@ import type { JsdelivrApi } from '@/api/jsdelivr.types'
 
 import { computed, onBeforeMount, ref } from 'vue'
 import { fetchStats, fetchVersionFiles, fetchVersions } from '@/api/jsdelivr'
+
 import SearchItemSmall from '@/components/SearchItemSmall.vue'
 import LinearDiagram from '@/components/LinearDiagram.vue'
 
@@ -11,7 +12,7 @@ defineEmits([
   'close'
 ])
 
-const props = defineProps<{
+const { item } = defineProps<{
   item: NpmApi.SearchObject
 }>()
 
@@ -25,9 +26,9 @@ const last5Versions = computed(() => {
 
 onBeforeMount(async () => {
   Promise.all([
-    fetchStats(props.item.package.name),
-    fetchVersions(props.item.package.name),
-    fetchVersionFiles(props.item.package.name, props.item.package.version)
+    fetchStats(item.package.name),
+    fetchVersions(item.package.name),
+    fetchVersionFiles(item.package.name, item.package.version)
   ])
     .then(([stats, versions, versionFiles]) => {
       packageStats.value = stats
@@ -128,7 +129,6 @@ function formatBytes(bytes: number, decimals: number = 2) {
 
     max-height: 80%;
     overflow-y: auto;
-    overflow-x: hidden;
 
     padding: 10px;
 

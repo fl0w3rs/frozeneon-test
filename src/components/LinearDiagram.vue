@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, reactive } from 'vue'
 
 const props = defineProps<{
   data: Record<string, number>,
@@ -7,20 +7,49 @@ const props = defineProps<{
 }>();
 
 const normalizedData = computed(() => {
+  // Find the maximum value in the data object
   const maxValue = Math.max(...Object.values(props.data));
+
+  // Normalize data by converting each value to a percentage of the maxValue
   return Object.fromEntries(
-    Object.entries(props.data).map(([key, value]) => [key, (value / maxValue) * 100])
-  );
+    Object.entries(props.data).map(([key, value]) => {
+      const normalizedValue = value / maxValue * 100;
+      return [key, normalizedValue];
+    })
+  ) as Record<string, number>;
 });
+
+const hoveredBar = reactive({
+  key: null,
+  position: [0, 0],
+} as { key: string | null, position: [number, number] });
+
+const processHover = (ev: any, key: string | null) => {
+  hoveredBar.key = key;
+  if(!key) return;
+
+  console.log(ev)
+  hoveredBar.position = [ev.clientX + 5, ev.clientY - 35];
+
+  // move position if it not fits in screen
+  if(hoveredBar.position[0] + 170 > window.innerWidth) {
+    hoveredBar.position[0] = window.innerWidth - 170
+  }
+}
 </script>
 
 <template>
   <div class="linear-diagram">
-    <div v-for="(value, key) in normalizedData" :key="key" class="bar" :style="{ height: value + '%' }">
-      <div class="bar__value">
-        {{key}}: {{ format ? format(data[key]) : data[key] }}
+    <Transition name="fade">
+      <div v-if="hoveredBar.key" class="bar__value" :style="{ top: hoveredBar.position[1] + 'px', left: hoveredBar.position[0] + 'px' }">
+        {{hoveredBar.key}}: {{ format ? format(data[hoveredBar.key]) : data[hoveredBar.key] }}
       </div>
-    </div>
+    </Transition>
+    <div
+      v-for="(value, key) in normalizedData" :key="key"
+      class="bar" :style="{ height: value + '%' }"
+      @mousemove="processHover($event, key)" @mouseleave="processHover($event, null)"
+    ></div>
   </div>
 </template>
 
@@ -36,7 +65,11 @@ const normalizedData = computed(() => {
 
 .bar {
   background-color: #3498db;
-  margin-right: 5px;
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+
   text-align: center;
   line-height: 50px;
   color: white;
@@ -45,36 +78,20 @@ const normalizedData = computed(() => {
 
   position: relative;
 
-  &:hover {
-    .bar__value {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
   &__value {
-    transition: opacity .2s ease-in-out;
-    visibility: hidden;
-    opacity: 0;
-
     z-index: 1;
+    position: fixed;
 
-    position: absolute;
+    white-space: nowrap;
 
-    left: 50%;
-    transform: translateX(-50%);
+    padding: 10px 10px;
 
-    top: -35px;
-
-    height: 30px;
-    width: 140px;
-    max-height: 30px;
     font-size: 12px;
-
-    background-color: #0c4165;
+    line-height: 12px;
     color: white;
 
-    overflow: hidden;
+    background-color: #0c4165;
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column;
