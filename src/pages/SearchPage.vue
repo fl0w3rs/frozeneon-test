@@ -1,27 +1,27 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useSearchStore } from '@/stores/search'
-import { storeToRefs } from 'pinia'
-import searchItemSmall from '@/components/SearchItemSmall.vue'
+import { computed, ref } from 'vue';
+import { useSearchStore } from '@/stores/search';
+import { storeToRefs } from 'pinia';
+import searchItemSmall from '@/components/SearchItemSmall.vue';
 
-const searchStore = useSearchStore()
-const { doSearch, setPage } = searchStore
-const { resultObjects, lastQuery, currentPage, totalPages } = storeToRefs(searchStore)
+const searchStore = useSearchStore();
+const { doSearch, setPage } = searchStore;
+const { resultObjects, lastQuery, currentPage, totalPages } = storeToRefs(searchStore);
 
-const query = ref('')
+const query = ref('');
 
 const processSearchClick = () => {
   if (!query.value) {
-    return
+    return;
   }
 
-  doSearch(query.value)
-}
+  doSearch(query.value);
+};
 
 const pagesNearThis = computed(() => {
   const result = [];
 
-  for(let i = currentPage.value - 2; i <= currentPage.value + 2; i++) {
+  for (let i = currentPage.value - 2; i <= currentPage.value + 2; i++) {
     if (i < 1 || i > totalPages.value) {
       continue;
     }
@@ -30,32 +30,32 @@ const pagesNearThis = computed(() => {
   }
 
   if (result[0] > 1) {
-    if(result[0] > 2) result.unshift('...');
+    if (result[0] > 2) result.unshift('...');
     result.unshift(1);
   }
 
   const lastResult = Number(result[result.length - 1]);
   if (lastResult < totalPages.value) {
-    if(lastResult < totalPages.value - 1) result.push('...');
-    result.push(totalPages.value)
+    if (lastResult < totalPages.value - 1) result.push('...');
+    result.push(totalPages.value);
   }
 
   return result;
-})
+});
 
 const processSetPage = (page: number | string) => {
-  if(typeof page !== 'number') {
+  if (typeof page !== 'number') {
     return;
   }
 
-  setPage(page)
-}
+  setPage(page);
+};
 </script>
 
 <template>
   <Teleport to=".header__content">
     <div class="search-bar">
-      <input v-model="query" placeholder="Query" type="text" @keyup.enter="processSearchClick">
+      <input v-model="query" placeholder="Query" type="text" @keyup.enter="processSearchClick" />
       <button class="outline" @click="processSearchClick">Search</button>
     </div>
   </Teleport>
@@ -63,11 +63,7 @@ const processSetPage = (page: number | string) => {
   <div v-if="Array.isArray(resultObjects)">
     <h2 class="search-page__title">Your search results for "{{ lastQuery }}" query</h2>
     <div class="search-page__item-container">
-      <search-item-small
-        v-for="result of resultObjects" :key="result.package.name"
-        :item="result"
-      >
-
+      <search-item-small v-for="result of resultObjects" :key="result.package.name" :item="result">
       </search-item-small>
     </div>
     <div class="search-page__pages">
@@ -78,9 +74,8 @@ const processSetPage = (page: number | string) => {
         :class="{ active: page === currentPage }"
         @click="processSetPage(page)"
       >
-          {{ page }}
+        {{ page }}
       </div>
-
     </div>
   </div>
 
@@ -151,7 +146,7 @@ const processSetPage = (page: number | string) => {
       border-bottom-right-radius: 5px;
     }
 
-    transition: background-color .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 
     &:hover:not(.active) {
       background-color: var(--border);

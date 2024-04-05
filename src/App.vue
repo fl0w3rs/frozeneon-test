@@ -3,15 +3,14 @@ import SearchPage from './pages/SearchPage.vue';
 </script>
 
 <template>
-  <div class="modal__inner">
-
-  </div>
+  <div class="modal__inner"></div>
   <header>
     <div class="container">
-      <img src="https://www.jsdelivr.com/assets/8aab44d2735c604d59887d32cc74b517689e5d5c/img/jsdelivr-horizontal-regular.svg" alt="JSDelivr Logo" />
-      <div class="header__content">
-
-      </div>
+      <img
+        src="https://www.jsdelivr.com/assets/8aab44d2735c604d59887d32cc74b517689e5d5c/img/jsdelivr-horizontal-regular.svg"
+        alt="JSDelivr Logo"
+      />
+      <div class="header__content"></div>
     </div>
   </header>
 
@@ -23,12 +22,13 @@ import SearchPage from './pages/SearchPage.vue';
 
   <footer>
     <div class="footer__author container">
-      <div class="footer__author__name">
-        fl0w3rs
-      </div>
+      <div class="footer__author__name">fl0w3rs</div>
       <div class="footer__author__github">
         <a href="https://github.com/fl0w3rs">
-          <img src="https://www.logo.wine/a/logo/GitHub/GitHub-Wordmark-White-Logo.wine.svg" alt="GitHub">
+          <img
+            src="https://www.logo.wine/a/logo/GitHub/GitHub-Wordmark-White-Logo.wine.svg"
+            alt="GitHub"
+          />
         </a>
       </div>
     </div>
@@ -100,7 +100,7 @@ footer {
   visibility: visible;
   opacity: 1;
 
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
 
   &:empty {
     display: none;

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import type { NpmApi } from '@/api/npm.types'
-import SearchItemModal from '@/components/SearchItemModal.vue'
-import { ref } from 'vue'
+import type { SearchObject as NpmSearchObject } from '@/api/npm.types';
+import SearchItemModal from '@/components/SearchItemModal.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
-  item: NpmApi.SearchObject,
+  item: NpmSearchObject
   asComponent?: boolean
-}>()
+}>();
 
 const processShowModal = (val: boolean) => {
-  if (props?.asComponent) return
+  if (props?.asComponent) return;
 
-  showModal.value = val
-}
+  showModal.value = val;
+};
 
-const showModal = ref(false)
+const showModal = ref(false);
 </script>
 
 <template>
@@ -33,7 +33,8 @@ const showModal = ref(false)
           <img
             :src="`https://img.jsdelivr.com/github.com/${item.package.publisher?.username}.png`"
             alt="Avatar"
-          > {{ item.package.publisher?.username }}
+          />
+          {{ item.package.publisher?.username }}
         </div>
         <div class="info-label">
           Version <span class="bold">{{ item.package.version }}</span>
@@ -45,14 +46,12 @@ const showModal = ref(false)
       </div>
 
       <div
-        v-if="
-          Array.isArray(item.package.keywords)
-          && item.package.keywords.length > 0
-        "
+        v-if="Array.isArray(item.package.keywords) && item.package.keywords.length > 0"
         class="search-item__info__keywords"
       >
         <div
-          v-for="keyword in item.package.keywords" :key="`keyword_${item.package.name}_${keyword}`"
+          v-for="keyword in item.package.keywords"
+          :key="`keyword_${item.package.name}_${keyword}`"
           class="search-item__info__keywords__item"
         >
           {{ keyword }}
@@ -67,7 +66,7 @@ const showModal = ref(false)
   display: flex;
   justify-content: space-between;
 
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:not(.as-component):hover {
     background-color: rgba(white, 0.1);

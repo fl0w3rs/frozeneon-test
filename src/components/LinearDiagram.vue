@@ -1,53 +1,63 @@
 <script lang="ts" setup>
-import { computed, reactive } from 'vue'
+import { computed, reactive } from 'vue';
 
 const props = defineProps<{
-  data: Record<string, number>,
+  data: Record<string, number>
   format?: (value: number) => string | number
 }>();
 
-const normalizedData = computed(() => {
+const normalizedData = computed((): Record<string, number> => {
   // Find the maximum value in the data object
   const maxValue = Math.max(...Object.values(props.data));
 
   // Normalize data by converting each value to a percentage of the maxValue
   return Object.fromEntries(
     Object.entries(props.data).map(([key, value]) => {
-      const normalizedValue = value / maxValue * 100;
+      const normalizedValue = (value / maxValue) * 100;
       return [key, normalizedValue];
     })
-  ) as Record<string, number>;
+  );
 });
 
-const hoveredBar = reactive({
+const hoveredBar = reactive<{
+  key: string | null
+  position: [number, number]
+}>({
   key: null,
-  position: [0, 0],
-} as { key: string | null, position: [number, number] });
+  position: [0, 0]
+});
 
-const processHover = (ev: any, key: string | null) => {
+const processHover = (ev: MouseEvent, key: string | null) => {
   hoveredBar.key = key;
-  if(!key) return;
+  if (!key) return;
 
   hoveredBar.position = [ev.clientX + 5, ev.clientY - 35];
 
   // move position if it not fits in screen
-  if(hoveredBar.position[0] + 170 > window.innerWidth) {
-    hoveredBar.position[0] = window.innerWidth - 170
+  if (hoveredBar.position[0] + 170 > window.innerWidth) {
+    hoveredBar.position[0] = window.innerWidth - 170;
   }
-}
+};
 </script>
 
 <template>
   <div class="linear-diagram">
     <Transition name="fade">
-      <div v-if="hoveredBar.key" class="bar__value" :style="{ top: hoveredBar.position[1] + 'px', left: hoveredBar.position[0] + 'px' }">
-        {{hoveredBar.key}}: {{ format ? format(data[hoveredBar.key]) : data[hoveredBar.key] }}
+      <div
+        v-if="hoveredBar.key"
+        class="bar__value"
+        :style="{ top: hoveredBar.position[1] + 'px', left: hoveredBar.position[0] + 'px' }"
+      >
+        {{ hoveredBar.key }}: {{ format ? format(data[hoveredBar.key]) : data[hoveredBar.key] }}
       </div>
     </Transition>
     <div
-      v-for="(value, key) in normalizedData" :key="key"
-      class="bar" :style="{ height: value + '%' }"
-      @mousemove="processHover($event, key)" @mouseleave="processHover($event, null)"
+      v-for="(value, key) in normalizedData"
+      :key="key"
+      class="bar"
+      :style="{ height: value + '%' }"
+      @mousemove="processHover($event, key)"
+      @mouseleave="processHover($event, null)"
     ></div>
   </div>
 </template>
