@@ -67,8 +67,10 @@ const processHover = (ev: MouseEvent, key: string | null) => {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  height: 100px;
 
+  border-bottom: 2px solid var(--border-active);
+
+  height: 100px;
   width: 100%;
 }
 
