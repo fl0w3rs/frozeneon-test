@@ -5,9 +5,9 @@ interface SearchPayload {
   page?: number
 }
 
-const API_URL = 'https://registry.npmjs.org';
+const API_URL = import.meta.env.VITE_NPMREG_API_URL;
+export const PACKAGES_PER_PAGE = import.meta.env.VITE_PACKAGES_PER_PAGE;
 
-export const PACKAGES_PER_PAGE = 10;
 export const searchForPackages = async (payload: SearchPayload): Promise<SearchResult> => {
   const { query, page = 1 } = payload;
 
