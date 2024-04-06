@@ -13,6 +13,11 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    'semi': ['error', 'always']
+    'semi': ['error', 'always'],
+    'quotes': ['error', 'single'],
+    'vue/component-name-in-template-casing': ['error', 'PascalCase', {
+      'registeredComponentsOnly': true,
+      'ignores': []
+    }]
   }
 };

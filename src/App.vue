@@ -16,7 +16,7 @@ import SearchPage from './pages/SearchPage.vue';
 
   <main>
     <div class="container">
-      <search-page />
+      <SearchPage />
     </div>
   </main>
 

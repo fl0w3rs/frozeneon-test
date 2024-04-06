@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SearchObject as NpmSearchObject } from '@/api/npm.types';
-import SearchItemModal from '@/components/SearchItemModal.vue';
+import SearchItemModal from '@/components/modals/SearchItem.vue';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -20,7 +20,7 @@ const showModal = ref(false);
 <template>
   <Teleport v-if="!asComponent" to=".modal__inner">
     <Transition name="fade">
-      <search-item-modal v-if="showModal" :item="item" @close="processShowModal(false)" />
+      <SearchItemModal v-if="showModal" :item="item" @close="processShowModal(false)" />
     </Transition>
   </Teleport>
   <div :class="{ 'as-component': asComponent }" class="search-item" @click="processShowModal(true)">

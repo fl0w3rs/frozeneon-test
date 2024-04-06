@@ -5,7 +5,7 @@ import type * as JsdelivrApi from '@/api/jsdelivr.types';
 import { computed, onBeforeMount, ref } from 'vue';
 import { fetchStats, fetchVersionFiles, fetchVersions } from '@/api/jsdelivr';
 
-import SearchItemSmall from '@/components/SearchItemSmall.vue';
+import SearchItemPreview from '@/components/SearchItemPreview.vue';
 import LinearDiagram from '@/components/LinearDiagram.vue';
 
 defineEmits(['close']);
@@ -54,7 +54,7 @@ function formatBytes(bytes: number, decimals: number = 2) {
         <img alt="cross" src="https://img.icons8.com/emoji/48/cross-mark-emoji.png" />
       </div>
 
-      <SearchItemSmall :as-component="true" :item="item" />
+      <SearchItemPreview :as-component="true" :item="item" />
 
       <div class="search-item-modal__stats">
         <div class="stats__col">
@@ -97,7 +97,7 @@ function formatBytes(bytes: number, decimals: number = 2) {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/media';
+@import 'media';
 
 .search-item-modal {
   width: 100%;
