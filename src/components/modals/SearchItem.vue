@@ -18,8 +18,9 @@ const packageStats = ref({} as JsdelivrApi.Stats);
 const packageVersions = ref([] as JsdelivrApi.Version[]);
 const packageVersionFiles = ref([] as JsdelivrApi.File[]);
 
-const last5Versions = computed(() => {
-  return packageVersions.value.slice(-5);
+// jsDelivr returns versions sorted by hits, most popular first
+const topVersions = computed(() => {
+  return packageVersions.value.slice(0, 5);
 });
 
 onBeforeMount(() => {
@@ -73,10 +74,10 @@ function formatBytes(bytes: number, decimals: number = 2) {
       </div>
 
       <div class="search-item-modal__versions">
-        <span class="versions__title">Last 5 versions</span>
+        <span class="versions__title">Most popular versions</span>
         <div class="versions__list">
           <div
-            v-for="version in last5Versions"
+            v-for="version in topVersions"
             :key="`version_${version.version}`"
             class="versions__item"
           >
