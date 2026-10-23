@@ -6,7 +6,7 @@ import SearchItemPreview from '@/components/SearchItemPreview.vue';
 
 const searchStore = useSearchStore();
 const { doSearch, setPage } = searchStore;
-const { resultObjects, lastQuery, currentPage, totalPages } = storeToRefs(searchStore);
+const { resultObjects, lastQuery, currentPage, totalPages, isLoading, error } = storeToRefs(searchStore);
 
 const query = ref('');
 
@@ -60,9 +60,14 @@ const processSetPage = (page: number | string) => {
     </div>
   </Teleport>
 
-  <div v-if="Array.isArray(resultObjects)">
+  <div v-if="error">
+    <h2 class="search-page__title">{{ error }}</h2>
+  </div>
+
+  <div v-else-if="Array.isArray(resultObjects)" :class="{ loading: isLoading }">
     <h2 class="search-page__title">Your search results for "{{ lastQuery }}" query</h2>
-    <div class="search-page__item-container">
+    <p v-if="resultObjects.length === 0" class="search-page__empty">No packages found.</p>
+    <div v-else class="search-page__item-container">
       <SearchItemPreview v-for="result of resultObjects" :key="result.package.name" :item="result" />
     </div>
     <div class="search-page__pages">
@@ -79,7 +84,7 @@ const processSetPage = (page: number | string) => {
   </div>
 
   <div v-else>
-    <h2 class="search-page__title">Nothing yet</h2>
+    <h2 class="search-page__title">{{ isLoading ? 'Searching...' : 'Nothing yet' }}</h2>
   </div>
 </template>
 
@@ -98,7 +103,18 @@ const processSetPage = (page: number | string) => {
   }
 }
 
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+
+  transition: opacity 0.2s ease-in-out;
+}
+
 .search-page {
+  &__empty {
+    margin-top: 1rem;
+  }
+
   &__title {
     font-weight: bold;
   }
