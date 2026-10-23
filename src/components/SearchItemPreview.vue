@@ -15,6 +15,7 @@ const processShowModal = (val: boolean) => {
 };
 
 const showModal = ref(false);
+const avatarFailed = ref(false);
 </script>
 
 <template>
@@ -31,8 +32,10 @@ const showModal = ref(false);
       <div class="search-item__info__labels">
         <div class="search-item__info__labels__author">
           <img
+            v-if="!avatarFailed"
             :src="`https://img.jsdelivr.com/github.com/${item.package.publisher?.username}.png`"
             alt="Avatar"
+            @error="avatarFailed = true"
           />
           {{ item.package.publisher?.username }}
         </div>
