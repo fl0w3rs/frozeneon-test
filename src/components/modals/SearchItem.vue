@@ -97,7 +97,7 @@ function formatBytes(bytes: number, decimals: number = 2) {
 </template>
 
 <style lang="scss" scoped>
-@import 'media';
+@import '@/assets/media';
 
 .search-item-modal {
   width: 100%;

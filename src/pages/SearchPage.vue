@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { useSearchStore } from '@/stores/search';
 import { storeToRefs } from 'pinia';
-import searchItemSmall from '@/components/SearchItemSmall.vue';
+import SearchItemPreview from '@/components/SearchItemPreview.vue';
 
 const searchStore = useSearchStore();
 const { doSearch, setPage } = searchStore;
@@ -63,8 +63,7 @@ const processSetPage = (page: number | string) => {
   <div v-if="Array.isArray(resultObjects)">
     <h2 class="search-page__title">Your search results for "{{ lastQuery }}" query</h2>
     <div class="search-page__item-container">
-      <search-item-small v-for="result of resultObjects" :key="result.package.name" :item="result">
-      </search-item-small>
+      <SearchItemPreview v-for="result of resultObjects" :key="result.package.name" :item="result" />
     </div>
     <div class="search-page__pages">
       <div
