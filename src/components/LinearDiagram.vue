@@ -7,13 +7,13 @@ const props = defineProps<{
 }>();
 
 const normalizedData = computed((): Record<string, number> => {
-  // Find the maximum value in the data object
-  const maxValue = Math.max(...Object.values(props.data));
+  // Find the maximum value in the data object (0 for empty data or all zeros)
+  const maxValue = Math.max(0, ...Object.values(props.data));
 
   // Normalize data by converting each value to a percentage of the maxValue
   return Object.fromEntries(
     Object.entries(props.data).map(([key, value]) => {
-      const normalizedValue = (value / maxValue) * 100;
+      const normalizedValue = maxValue > 0 ? (value / maxValue) * 100 : 0;
       return [key, normalizedValue];
     })
   );

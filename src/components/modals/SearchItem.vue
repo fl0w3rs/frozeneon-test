@@ -65,7 +65,7 @@ function formatBytes(bytes: number, decimals: number = 2) {
         <div class="stats__col">
           <div class="stats__col__title">Bandwidth by dates</div>
           <LinearDiagram
-            v-if="packageStats?.hits?.dates"
+            v-if="packageStats?.bandwidth?.dates"
             :data="packageStats.bandwidth.dates"
             :format="formatBytes"
           />
