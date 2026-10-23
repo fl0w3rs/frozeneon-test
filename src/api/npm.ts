@@ -6,7 +6,7 @@ interface SearchPayload {
 }
 
 const API_URL = import.meta.env.VITE_NPMREG_API_URL;
-export const PACKAGES_PER_PAGE = import.meta.env.VITE_PACKAGES_PER_PAGE;
+export const PACKAGES_PER_PAGE = Number(import.meta.env.VITE_PACKAGES_PER_PAGE);
 
 export const searchForPackages = async (payload: SearchPayload): Promise<SearchResult> => {
   const { query, page = 1 } = payload;
