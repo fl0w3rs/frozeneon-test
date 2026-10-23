@@ -22,15 +22,16 @@ const last5Versions = computed(() => {
   return packageVersions.value.slice(-5);
 });
 
-onBeforeMount(async () => {
-  Promise.all([
+onBeforeMount(() => {
+  // Show whatever loaded: one failed request should not hide the other blocks
+  Promise.allSettled([
     fetchStats(item.package.name),
     fetchVersions(item.package.name),
     fetchVersionFiles(item.package.name, item.package.version)
   ]).then(([stats, versions, versionFiles]) => {
-    packageStats.value = stats;
-    packageVersions.value = versions;
-    packageVersionFiles.value = versionFiles;
+    if (stats.status === 'fulfilled') packageStats.value = stats.value;
+    if (versions.status === 'fulfilled') packageVersions.value = versions.value;
+    if (versionFiles.status === 'fulfilled') packageVersionFiles.value = versionFiles.value;
   });
 });
 

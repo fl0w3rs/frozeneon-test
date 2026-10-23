@@ -22,5 +22,9 @@ export const searchForPackages = async (payload: SearchPayload): Promise<SearchR
   const url = `${API_URL}/-/v1/search?${params}`;
   const response = await fetch(url);
 
+  if (!response.ok) {
+    throw new Error(`npm search failed: ${response.status}`);
+  }
+
   return (await response.json()) as SearchResult;
 };
