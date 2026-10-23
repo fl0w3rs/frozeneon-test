@@ -72,8 +72,8 @@ const processSetPage = (page: number | string) => {
     </div>
     <div class="search-page__pages">
       <div
-        v-for="page of pagesNearThis"
-        :key="page"
+        v-for="(page, index) of pagesNearThis"
+        :key="`${index}-${page}`"
         class="search-page__page"
         :class="{ active: page === currentPage }"
         @click="processSetPage(page)"
